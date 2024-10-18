@@ -94,11 +94,12 @@ jobs:
     - name: Install Feeds(安装feeds)
       run: |
         cd $OPENWRT_PATH
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
         rm -rf $(find ./feeds/luci/ ./feeds/packages/ -maxdepth 3 -type d -iname "*passwall*" -prune)
         echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> ./feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-
     - name: Load Custom Configuration(加载自定义配置)
       run: |
         [ -e files ] && mv files $OPENWRT_PATH/files
